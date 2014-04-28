@@ -36,6 +36,7 @@ $MONGO["servers"][$i]["control_users"]["admin"] = "admin";//one of control users
 $MONGO["servers"][$i]["ui_only_dbs"] = "";//databases to display
 $MONGO["servers"][$i]["ui_hide_dbs"] = "";//databases to hide
 $MONGO["servers"][$i]["ui_hide_collections"] = "";//collections to hide
+$MONGO["servers"][$i]["ui_hide_collections_count"] = false;//collections to hide
 $MONGO["servers"][$i]["ui_hide_system_collections"] = false;//whether hide the system collections
 
 //$MONGO["servers"][$i]["docs_nature_order"] = false;//whether show documents by nature order, default is by _id field

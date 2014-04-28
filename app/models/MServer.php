@@ -18,6 +18,7 @@ class MServer {
 	private $_uiOnlyDbs;
 	private $_uiHideDbs;
 	private $_uiHideCollections;
+	private $_uiHideCollectionsCount = false;
 	private $_uiHideSystemCollections = false;
 	
 	private $_docsNatureOrder = false;
@@ -83,9 +84,12 @@ class MServer {
 				case "ui_hide_dbs":
 					$this->_uiHideDbs = $value;
 					break;
-				case "ui_hide_collections":
-					$this->_uiHideCollections = $value;
-					break;
+                case "ui_hide_collections":
+                    $this->_uiHideCollections = $value;
+                    break;
+                case "ui_hide_collections_count":
+                    $this->_uiHideCollectionsCount = $value;
+                    break;
 				case "ui_hide_system_collections":
 					$this->_uiHideSystemCollections = $value;
 					break;
@@ -232,7 +236,20 @@ class MServer {
 	public function setUIHideSystemCollections($bool) {
 		$this->_uiHideSystemCollections = $bool;
 	}
-	
+
+    /**
+     * @return boolean
+     */
+    public function uiHideCollectionsCount() {
+        return $this->_uiHideCollectionsCount;
+    }
+
+    /**
+     * @param boolean $uiHideCollectionsCount
+     */
+    public function setUiHideCollectionsCount($uiHideCollectionsCount) {
+        $this->_uiHideCollectionsCount = $uiHideCollectionsCount;
+    }
 
 	/**
 	 * Set whether documents nature order
