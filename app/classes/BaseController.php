@@ -211,6 +211,7 @@ class BaseController extends RExtController {
 		$exportor = new VarExportor($this->_mongo->selectDB("admin"), $var);
 		$varString = null;
 		$highlight = true;
+		$mixed = false;
 		switch ($this->_server->docsRender()) {
 			case "default":
 				$varString = $exportor->export($format, $label);
@@ -219,6 +220,15 @@ class BaseController extends RExtController {
 				$varString = $exportor->export($format, false);
 				$label = false;
 				$highlight = false;
+				break;
+			case "mixed":
+				$varString = $exportor->export($format, false);
+				if (strlen($varString) > $this->_server->docsRenderLimit())
+					$highlight = false;
+				else
+					$highlight = true;
+				$label = false;
+				$mixed = true;
 				break;
 			default:
 				$varString = $exportor->export($format, $label);
@@ -246,6 +256,60 @@ class BaseController extends RExtController {
 			return "<a href=\"#\" onclick=\"fieldOpMore(\'" . $field . "\',\'' . $id . '\');return false;\" title=\"More text\">[...]</a>";'), $string);
 		}
 		return $string;
+	}
+
+	/**
+	 * Export IndexSizes as string.
+	 *
+	 * @param mixed $var variable to be exported
+	 * @return string
+	 */
+		protected function _highlightIndexSizes($var) {
+			$string = "<table cellspacing='0' cellpadding='0' style='width:100%;border:0px solid #cccccc'>";
+			$c = 0;
+			foreach($var as $key => $value) {
+				if ($value < 1024) {
+					$formatted_size = $value . "b";
+				} else if ($value < 1024 * 1024) {
+					$formatted_size = round($value/1024, 2) . " kb";
+				} else if ($value < 1024 * 1024 * 1024) {
+					$formatted_size = round($value/1024/1024, 2) . " mb";
+				} else if ($value < 1024 * 1024 * 1024 * 1024) {
+					$formatted_size = round($value/1024/1024/1024, 2) . " gb";
+				}
+				if (($c%2) == 0) {
+					$bgc = "#fff";
+				} else {
+					$bgc = "#eee";
+				}
+				$string .= "<tr style='background-color: " . $bgc . "'><td style='border:1px solid #cccccc'>" . $key . "</td>";
+				$string .= "<td style='border:1px solid #cccccc' title='(" . $value . " bytes)'>" . $formatted_size . "</td></tr>";
+				$c++;
+			}
+			$string .= "</table>";
+			return $string;
+		}
+
+	/**
+	 * format bytes to human size
+	 *
+	 * @param integer $bytes size in byte
+	 * @return string size in k, m, g..
+	 **/
+	protected function _formatBytes($bytes) {
+		if ($bytes < 1024) {
+			return $bytes;
+		}
+		if ($bytes < 1024 * 1024) {
+			return round($bytes/1024, 2) . "k";
+		}
+		if ($bytes < 1024 * 1024 * 1024) {
+			return round($bytes/1024/1024, 2) . "m";
+		}
+		if ($bytes < 1024 * 1024 * 1024 * 1024) {
+			return round($bytes/1024/1024/1024, 2) . "g";
+		}
+		return $bytes;
 	}
 
 	/**

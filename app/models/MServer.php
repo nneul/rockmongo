@@ -4,7 +4,6 @@ import("lib.mongo.RMongo");
 
 class MServer {
 	private $_mongoName = null;
-	private $_mongoSock = null;
 	private $_mongoHost = "127.0.0.1";
 	private $_mongoPort = 27017;
 	private $_mongoUser = "";
@@ -23,7 +22,9 @@ class MServer {
 
 	private $_docsNatureOrder = false;
 	private $_docsRender = "default";
+	private $_docsRenderLimit = 2000;
 
+    private $_mongoClientMajorVersion = 1.5;
 	/**
 	 * the server you are operating
 	 *
@@ -99,11 +100,18 @@ class MServer {
 				case "docs_render":
 					$this->_docsRender = $value;
 					break;
+				case "docs_render_limit":
+					$this->_docsRenderLimit = $value;
+					break;
 			}
 		}
 		if (empty($this->_mongoName)) {
 			$this->_mongoName = $this->_mongoHost . ":" . $this->_mongoPort;
 		}
+
+        $version = explode(".", MongoClient::VERSION,3);
+        array_pop($version);
+        $this->_mongoClientMajorVersion = (float) join("." , $version);
 	}
 
 	public function mongoName() {
@@ -260,17 +268,17 @@ class MServer {
 	/**
 	 * Set documents highlight render
 	 *
-	 * @param string $render can be "default" or "plain"
+	 * @param string $render can be "default", "plain" or "mixed"
 	 * @since 1.1.6
 	 */
 	public function setDocsRender($render) {
-		$renders = array( "default", "plain" );
+		$renders = array( "default", "plain", "mixed" );
 
 		if (in_array($render, $renders)) {
 			$this->_docsRender = $render;
 		}
 		else {
-			exit("docs_render should be either 'default' or 'plain'");
+			exit("docs_render should be 'default', 'plain' or 'mixed'");
 		}
 	}
 
@@ -282,6 +290,16 @@ class MServer {
 	 */
 	public function docsRender() {
 		return $this->_docsRender;
+	}
+
+	/**
+	 * Get documents highlight render limit
+	 *
+	 * @return int
+	 * @since 1.1.7
+	 */
+	public function docsRenderLimit() {
+		return $this->_docsRenderLimit;
 	}
 
 	public function auth($username, $password, $db = "admin") {
@@ -310,16 +328,12 @@ class MServer {
 				$options["password"] = $password;
 				$options["db"] = $db;
 			}
-
-			//after 1.2.11 use options to authenticate
-			if(!$this->_mongoAuth && !empty($this->_mongoUser) && !empty($this->_mongoPass) && RMongo::compareVersion("1.2.11") > 0) {
-				$options["username"] = $this->_mongoUser;
-				$options["password"] = $this->_mongoPass;
-
-				if (!empty($this->_mongoDb)) {
-					$options["db"] = $this->_mongoDb;
-				}
-			}
+            // changing timeout to the new value
+            if ($this->_mongoClientMajorVersion >= 1.5){
+                $options['socketTimeoutMS'] = $this->_mongoTimeout;
+            } else {
+                MongoCursor::$timeout = $this->_mongoTimeout;
+            }
 			$this->_mongo = new RMongo($server, $options);
 			$this->_mongo->setSlaveOkay(true);
 		}
@@ -329,11 +343,6 @@ class MServer {
 			}
 			echo "Unable to connect MongoDB, please check your configurations. MongoDB said:" . $e->getMessage() . ".";
 			exit();
-		}
-
-		// changing timeout to the new value
-		if (RMongo::compareVersion("1.5.0") < 0) {
-			MongoCursor::$timeout = $this->_mongoTimeout;
 		}
 
 		//auth by mongo
@@ -403,7 +412,7 @@ class MServer {
 		} catch (Exception $e) {
 			$dbs["ok"] = false;
 		}
-		if (!$dbs["ok"]) {
+		if (empty($dbs["ok"])) {
 			$user = MUser::userInSession();
 
 			$dbs = array(
@@ -447,9 +456,9 @@ class MServer {
 			return $user->username() . ":" . $user->password() . "@" . $host;
 		}
 		if (empty($this->_mongoUser)) {
-			return 'mongodb://' . $host;
+			return $host;
 		}
-		return 'mongodb://' . $this->_mongoUser . ":" . $user->_mongoPass . "@" . $host;
+		return $this->_mongoUser . ":" . $this->_mongoPass . "@" . $host;
 	}
 
 	/**
@@ -494,3 +503,4 @@ class MServer {
 		return self::$_currentServer;
 	}
 }
+

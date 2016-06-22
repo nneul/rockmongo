@@ -448,7 +448,7 @@ function o($config) {
  * @return string
  */
 function rock_name_to_java($name) {
-    preg_replace_callback("/_([a-zA-Z])/",function($matches){
+	$name = preg_replace_callback("/_([a-zA-Z])/",function($matches){
         return strtoupper($matches[1]);
     }, $name);
 
