@@ -1,5 +1,4 @@
 <?php
-
 import("classes.BaseController");
 
 class AdminController extends BaseController {
@@ -8,18 +7,18 @@ class AdminController extends BaseController {
 		$this->topUrl = $this->path("admin.top");
 		$this->leftUrl = $this->path("admin.dbs");
 		$this->rightUrl = $this->path("server.index");
-		
+
 		$this->display();
 	}
-	
+
 	/** top frame **/
 	public function doTop() {
 		$this->logoutUrl = $this->path("logout.index");
-		$this->admin = $this->_admin->username(); 
-		
+		$this->admin = $this->_admin->username();
+
 		$this->servers = $this->_admin->servers();
 		$this->serverIndex = $this->_admin->hostIndex();
-		
+
 		$isMasterRet =  null;
 		try {
 			$isMasterRet = $this->_mongo->selectDB($this->_admin->defaultDb())->command(array( "isMaster" => 1 ));
@@ -32,10 +31,10 @@ class AdminController extends BaseController {
 		} catch (MongoCursorException $e) {
 			$this->isMaster = null;
 		}
-		
+
 		$this->display();
-	}	
-	
+	}
+
 	/** show dbs in left frame **/
 	public function doDbs() {
 		$dbs = $this->_server->listDbs();
@@ -43,14 +42,10 @@ class AdminController extends BaseController {
 		$this->baseUrl = $this->path("admin.dbs");
 		$this->tableUrl = $this->path("collection.index");
 		$this->showDbSelector = false;
-		
+
 		//add collection count
 		foreach ($this->dbs as $index => $db) {
-            if($this->_server->uiHideCollectionsCount()){
-                $collectionCount = 0;
-            } else {
-			    $collectionCount = count(MDb::listCollections($this->_mongo->selectDB($db["name"])));
-            }
+			$collectionCount = count(MDb::listCollections($this->_mongo->selectDB($db["name"])));
 			$db["collectionCount"] = $collectionCount;
 			if (isset($db["sizeOnDisk"])) {
 				$db["size"] = round($db["sizeOnDisk"]/1024/1024, 2);//M
@@ -58,9 +53,9 @@ class AdminController extends BaseController {
 			$this->dbs[$index] = $db;
 		}
 
-		//current db		
+		//current db
 		$db = x("db");
-		
+
 		$this->tables = array();
 		if ($db) {
 			$mongodb = $this->_mongo->selectDB($db);
@@ -71,19 +66,19 @@ class AdminController extends BaseController {
 		}
 		$this->display();
 	}
-	
+
 	/** about project and us **/
 	public function doAbout() {
 		$this->display();
 	}
-	
+
 	/** change current host **/
 	public function doChangeHost() {
 		$index = xi("index");
 		MUser::userInSession()->changeHost($index);
 		$this->redirect("admin.index", array( "host" => $index ));
 	}
-	
+
 	/**
 	 * change language of UI interface
 	 *
@@ -91,8 +86,5 @@ class AdminController extends BaseController {
 	public function doChangeLang() {
 		setcookie("ROCK_LANG", x("lang"), time() + 365 * 86400);
 		header("location:index.php");
-	}	
+	}
 }
-
-
-?>
