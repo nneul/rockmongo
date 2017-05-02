@@ -6,13 +6,15 @@
 Introduction
 --------------------------------------
 RockMongo is a MongoDB administration tool, written in PHP 7, very easy to install and use.
+This tool can be used with MongoBD 2.4 to Mongo 3.4
 
 
 Installation
 --------------------------------------
 1. Install PHP runtime environment if you don't have one yet, such like Apache Httpd, Nginx ...
 2. Install MongoDB PHP driver (http://us.php.net/manual/en/mongodb.installation.php)
-3. Run "git clone git@github.com:viktor-poltorak/rockmongo.git"
+3. Run "git clone https://github.com/IngenierosWeb/rockmongo.git"
+4. Copy config-sample.php to config.php
 5. Open the config.php with your convenient editor, change host, port, admins and so on to yours
 6. Install comproser (https://getcomposer.org/doc/00-intro.md)
 7. Run "composer install"
@@ -61,17 +63,11 @@ Thanks
 
 Bugs & Issues
 --------------------------------------
-Please feel free to report any bugs and issues to me, my email is: iwind.liu@gmail.com .
-
-
-Source Code Repository
---------------------------------------
-Repositories are located at
-  https://github.com/viktor-poltorak/rockmongo
+Please feel free to report any bugs and issues to https://github.com/IngenierosWeb/rockmongo/issues
 
 
 Contributing
 --------------------------------------
 Somebody who want to contribute to the project, may help us by doing these:
 * Translate messages from English to other languages (you can see them in app/langs directory)
-* Make donations here: http://rockmongo.com/donation
+* Request a pull with fixed code or new functionallities

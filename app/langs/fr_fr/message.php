@@ -189,16 +189,16 @@ $message["switch_hosts"] = "Basculer d'hôte";
 /** about **/
 $message["about_content"] = '<strong class="big">RockMongo</strong> est un outil d\'administration pour MongoDB, écrit en PHP 5.
 
-<p>Voir <a href="http://rockmongo.com/" target="_blank">http://rockmongo.com</a> pour plus de détails.</p>
+<p>Voir <a href="https://github.com/IngenierosWeb/rockmongo" target="_blank">http://rockmongo.com</a> pour plus de détails.</p>
 
 <p>Si vous avez des questions, veuillez m\'envoyer un e-mail : <a href="mailto:iwind.liu@gmail.com">iwind.liu@gmail.com</a> .</p>
 
 <p>Documents:<ul>
-<li><a href="http://rockmongo.com/wiki/changeLog" target="_blank">Changelog</a></li>
-<li><a href="http://rockmongo.com/wiki/configuration" target="_blank">Configuration</a></li>
-<li><a href="http://rockmongo.com/wiki/plugin" target="_blank">Plug-in</a></li>
-<li><a href="http://rockmongo.com/wiki/faq" target="_blank">FAQ</a></li>
-<li><a href="http://rockmongo.com/donation" target="_blank">Donation<br/><img src="http://www.paypal.com/en_US/i/btn/x-click-but04.gif"/></a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongowiki/changeLog" target="_blank">Changelog</a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongowiki/configuration" target="_blank">Configuration</a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongowiki/plugin" target="_blank">Plug-in</a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongowiki/faq" target="_blank">FAQ</a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongodonation" target="_blank">Donation<br/><img src="http://www.paypal.com/en_US/i/btn/x-click-but04.gif"/></a></li>
 <li><a href="https://github.com/iwind/rockmongo/issues" target="_blank">Report an Issue</li>
 </ul></p>
 ';
@@ -206,6 +206,6 @@ $message["about_content"] = '<strong class="big">RockMongo</strong> est un outil
 /** Login **/
 $message["loginandrock"] = "Connexion & Rock";
 $message["changeconfig"] = "Vous devriez changer votre nom d'utilisateur et mot de passe dans le fichier config.php";
-$message["rockmongocredits"] = "Powered by RockMongo v" . (ROCK_MONGO_VERSION) . ", <a href=\"http://rockmongo.com/downloads\" target=\"_blank\">check out new version here.</a>";
+$message["rockmongocredits"] = "Powered by RockMongo v" . (ROCK_MONGO_VERSION) . ", <a href=\"https://github.com/IngenierosWeb/rockmongodownloads\" target=\"_blank\">check out new version here.</a>";
 
 ?>

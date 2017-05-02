@@ -193,11 +193,11 @@ $message["about_content"] = '<strong class="big">RockMongo</strong> --- инст
 <p>Вопросы можно писать Xiangchao Liu: <a href="mailto:iwind.liu@gmail.com">iwind.liu@gmail.com</a> .</p>
 
 <p>Документация:<ul>
-<li><a href="http://rockmongo.com/wiki/changeLog" target="_blank">Журнал изменений</a></li>
-<li><a href="http://rockmongo.com/wiki/configuration" target="_blank">Конфигурация</a></li>
-<li><a href="http://rockmongo.com/wiki/plugin" target="_blank">Плагины</a></li>
-<li><a href="http://rockmongo.com/wiki/faq" target="_blank">FAQ</a></li>
-<li><a href="http://rockmongo.com/donation" target="_blank">Помочь материально<br/><img src="http://www.paypal.com/en_US/i/btn/x-click-but04.gif"/></a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongowiki/changeLog" target="_blank">Журнал изменений</a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongowiki/configuration" target="_blank">Конфигурация</a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongowiki/plugin" target="_blank">Плагины</a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongowiki/faq" target="_blank">FAQ</a></li>
+<li><a href="https://github.com/IngenierosWeb/rockmongodonation" target="_blank">Помочь материально<br/><img src="http://www.paypal.com/en_US/i/btn/x-click-but04.gif"/></a></li>
 <li><a href="https://github.com/iwind/rockmongo/issues" target="_blank">Отправить баг</li>
 </ul></p>
 ';
@@ -205,6 +205,6 @@ $message["about_content"] = '<strong class="big">RockMongo</strong> --- инст
 /** Login **/
 $message["loginandrock"] = "Войти и отжечь";
 $message["changeconfig"] = "Можно изменить имя пользователя и пароль в config.php.";
-$message["rockmongocredits"] = "Работает на RockMongo v" . (ROCK_MONGO_VERSION) . ", <a href=\"http://rockmongo.com/downloads\" target=\"_blank\">посмотреть новую версию.</a>";
+$message["rockmongocredits"] = "Работает на RockMongo v" . (ROCK_MONGO_VERSION) . ", <a href=\"https://github.com/IngenierosWeb/rockmongodownloads\" target=\"_blank\">посмотреть новую версию.</a>";
 
 ?>

@@ -16,17 +16,25 @@ class RMongo {
 	 * @param array $options Options
 	 */
 	public function __construct($server, array $options = array()) {
+//            if(class_exists("MongoDB\Client")){
+//                try {
+//                    $this->_mongo = new MongoDB\Client($server, $options);
+//                } catch (Exception $exc) {
+//                    echo $exc->getMessage();
+//                    echo $exc->getTraceAsString();
+//                }
+//                        }
 		if (class_exists("MongoClient")) {
-	    try {
-	      $this->_mongo = new MongoClient($server, $options);
-	    } catch ( Exception $e ) {
-	      $options['db'] = 'admin';
-	      try {
-	        $this->_mongo = new MongoClient($server, $options);
-	      } catch ( Exception $tmp ) {
-	        throw $e;
-	      }
-	    }
+                    try {
+                      $this->_mongo = new MongoClient($server, $options);
+                    } catch ( Exception $e ) {
+                      $options['db'] = 'admin';
+                      try {
+                        $this->_mongo = new MongoClient($server, $options);
+                      } catch ( Exception $tmp ) {
+                        throw $e;
+                      }
+                    }
 		}
 		else {
 			$this->_mongo = new Mongo($server, $options);
@@ -267,6 +275,10 @@ class RMongo {
 	 * @since 1.1.4
 	 */
 	public static function getVersion() {
+		if (class_exists("\MongoDB\Client")) {
+                    return MongoDB\Client::class;
+		}
+
 		if (class_exists("MongoClient")) {
 			return MongoClient::VERSION;
 		}
