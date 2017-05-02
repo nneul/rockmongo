@@ -905,8 +905,12 @@ window.parent.frames["left"].location.reload();
 		if ($ret["ok"]) {
 			$this->stats = $ret;
 			foreach ($this->stats as $index => $stat) {
-				if (is_array($stat) || is_bool($stat)) {
-					$this->stats[$index] = $this->_highlight($stat, "json");
+				if (is_array($stat)) {
+					if ($index == "indexSizes") {
+						$this->stats[$index] = $this->_highlightIndexSizes($stat, "json");
+					} else {
+						$this->stats[$index] = $this->_highlight($stat);
+					}
 				}
 			}
 		}

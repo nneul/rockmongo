@@ -3,6 +3,9 @@
  * RockMongo configuration
  *
  * Defining default options and server configuration
+ *
+ * Copy config-sample.php > config.php and make your changes to the config.php.
+ *
  * @package rockmongo
  */
  
@@ -34,10 +37,12 @@ $MONGO["servers"][$i]["control_users"]["admin"] = "admin";//one of control users
 $MONGO["servers"][$i]["ui_only_dbs"] = "";//databases to display
 $MONGO["servers"][$i]["ui_hide_dbs"] = "";//databases to hide
 $MONGO["servers"][$i]["ui_hide_collections"] = "";//collections to hide
+$MONGO["servers"][$i]["ui_hide_collections_count"] = false;//collections to hide
 $MONGO["servers"][$i]["ui_hide_system_collections"] = false;//whether hide the system collections
 
 //$MONGO["servers"][$i]["docs_nature_order"] = false;//whether show documents by nature order, default is by _id field
-//$MONGO["servers"][$i]["docs_render"] = "default";//document highlight render, can be "default" or "plain"
+//$MONGO["servers"][$i]["docs_render"] = "mixed";//document highlight render, can be "default", "plain" or "mixed"
+//$MONGO["servers"][$i]["docs_render_limit"] = 2000; //in "mixed" mode, documents smaller than this size will highlighted, rest in plain.
 
 $i ++;
 
@@ -51,5 +56,6 @@ $MONGO["servers"][$i]["mongo_port"] = "27017";
 $MONGO["servers"][$i]["control_users"]["admin"] = "password";
 $i ++;
 **/
+
 
 ?>
