@@ -265,7 +265,6 @@ class DbController extends BaseController
                 $tmp = $_FILES["json"]["tmp_name"];
 
                 //read file by it's format
-                $body = "";
                 $body = file_get_contents($tmp);
                 if (preg_match("/\\.gz$/", $_FILES["json"]["name"])) {
                     $body = gzdecode($body);
